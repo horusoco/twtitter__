@@ -1,0 +1,8 @@
+.vscode 
+cache
+settings.py 
+twitter_anv/
+requirements.txt 
+home.html
+user_profile.html
+models.py 

@@ -1,0 +1,84 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login on Twitter/Twitter</title>
+        <title>{% block title %}Home/ Twitter{% endblock title %}</title>
+        <link rel="icon" href="{% static "image/home/twitter.jpg"%}">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
+    
+
+        <style>
+            .submit-button{
+            background-color:rgb(50, 153, 218)!important;
+            color: white;
+            border-radius: 25px;
+            height: 50px;
+            font-weight: bolder;
+           }
+           #id_username{
+            border-radius: 25px;
+            height: 50px;
+            
+           }
+        
+       
+           #id_password1{
+            border-radius: 25px;
+            height: 50px;
+           }
+           #id_password2{
+            border-radius: 25px;
+            height: 50px;
+           }
+
+        ul{
+            list-style: none;
+        }
+
+        form .form-control:focus{
+            border: solid 2px rgb(127, 189, 228)!important;
+
+            box-shadow: none;
+        }
+         
+        </style>
+    
+      </head>
+
+
+
+
+  <!-- Material form login -->
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-10 offset-lg-1">
+                
+                  <!-- Form -->
+                  <div class="col-lg-8 offset-lg-2 mt-4">
+                    <img src="{% static "image/home/twitter.jpg"%}" width="60" height="40" class="offset-sm-5 offset-md-5 offset-lg-5">
+                    <!-- form -->
+                    <form class="text-center mt-5" style="color: #757575;" action="#" method="POST">
+                      {% csrf_token %}
+                      {{ signup_form|crispy }}
+                      <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0 submit-button" type="submit">Register</button> 
+                    </form>
+                    <!-- Form -->
+                  </div>
+                
+              </div>
+            </div>
+        </div>
+
+    </body>
+</html>
+
+
+

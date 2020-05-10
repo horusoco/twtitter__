@@ -1,0 +1,140 @@
+/* user cover big picture*/
+.user-cover-picture {
+    position: relative;
+}
+.user-cover-picture img{
+    width: 100%;
+}
+
+/* user profile picture */
+.user-profile-picture img{
+    border-radius:9999px;
+    /* border-top-style:solid; */
+    border: white solid 5px;
+    margin-left: 10px;
+    width: 134px;
+    height: 134px;
+    /* background-color: red; */
+    position: absolute;
+    top: 220px;
+}
+/* waa follow button apove user info */
+.user-profile-follow-button a{
+    background-color:rgba(0, 0, 0, 0);
+    border: 1px solid  rgb(26, 145, 218)!important;
+    color: rgb(26, 145, 218)!important;
+    border-radius: 999px;
+    height: 30px;
+    margin: 0 5px 0 10px;
+    min-height: 30px;
+    min-width: 62.79px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-stretch: 100%;
+    font-style: normal;
+    font-weight: 700;
+    cursor: pointer;  
+    text-decoration: none;
+}
+.user-profile-follow-button a:hover {
+    background-color:  rgb(206, 229, 245)!important;
+    /* color: red!important; */
+
+}
+/* user info */
+.user-info {
+    /* background-color: red; */
+    margin-top: 60px;
+}
+/* user info paragraph */
+.user-info p{
+    padding : 0;
+    margin : 0;
+    font-weight: 400px;
+    line-height : 19.68px;
+}
+
+/* userada dhinaca midig ee inaan follow garayso */
+.you-might-like_user img{
+    border-radius:9999px;
+    /* border-top-style:solid; */
+    width: 42px;
+    height: 42px;
+}
+/* waa profile userka dhinaca midig buttonka follow */
+.user-follow {
+    background-color:rgba(0, 0, 0, 0);
+    border: 1px solid  rgb(26, 145, 218)!important;
+    color: rgb(26, 145, 218)!important;
+    border-radius: 999px;
+    height: 30px;
+    margin: 0 5px 0 10px;
+    min-height: 30px;
+    min-width: 62.79px;
+    padding: 3px 15px;
+    font-size: 15px;
+    font-stretch: 100%;
+    font-style: normal;
+    font-weight: 700;
+    cursor: pointer;   
+}
+
+.user-follow a {
+    color: black!important;
+}
+/* waa user follow hover */
+.user-follow:hover {
+    background-color:  rgb(206, 229, 245)!important;
+}
+/* remover user follow button underline  */
+.user-follow a{
+    text-decoration: none;
+    color: rgb(26, 145, 218)!important;
+
+
+}
+
+/* nav under user info in user prfoile */
+.nav-user-profile{
+    /* background-color: rgb(26, 145, 218)!important; */
+    display: block;
+
+} 
+/* nav under user info in user prfoile */
+.nav-user-profile a {
+    /* background-color: rgb(26, 145, 218)!important; */
+    color: rgb(101, 119, 134);
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0;
+    
+}
+.nav-user-profile a:hover{
+    background-color: rgb(233, 243, 248)!important;
+    color: rgb(26, 145, 218)!important;
+}
+hr {
+    margin: 2px;
+}
+
+/* delete post in the user profile */
+ .delete-button button{
+    background-color: white;
+    color: grey;
+    border: none;
+}
+ /* .delete-button a{
+    color: red;
+} */
+.delete-button button:hover{
+    background-color: rgb(231, 240, 245)!important; 
+    color: rgb(26, 145, 218)!important;
+    border-radius: 999px;     
+}
+
+/* .delete-button button:hover{
+    background-color: rgb(217, 233, 241)!important;
+    color: rgb(26, 145, 218)!important;
+    border-radius: 15px;
+}  */
+ 

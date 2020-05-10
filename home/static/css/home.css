@@ -1,0 +1,277 @@
+body {
+    background-color: rgb(255, 255, 255);
+    margin: 0;
+    padding: 0;
+  }
+a {
+    /* color: black!important; */
+    cursor: pointer;
+    text-decoration: none;
+}
+/* waa qoraalka HOME ee topka xaga dhexda */
+.top-home {
+    color: rgb(20, 23, 26);
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+}
+a:hover {
+    text-decoration: none;
+}
+
+/* tweet upload div*/
+.tweet-upload {
+    /* background-color: grey; */
+    position: relative;
+    width: 100%;
+    height: 117px;   
+}
+/* tweet form upload */
+form textarea {
+    width: 100%;
+    height: 117px;
+    border: none;
+}
+/* remove the border when click */
+textarea:focus, input:focus{
+    outline: none;
+}
+/* tweet placeholder */
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    display: block;
+    font-size: 19px;
+    font-weight: 400;
+    height: 24px;
+    line-height: 25px;
+    overflow: hidden;
+    text-align: left;
+    padding-left: 70px;
+    padding-top: 20px;
+}
+  /* profile image inside the tweet textarea */
+  .profile-image img{
+    border-radius:9999px;
+    /* border-top-style:solid; */
+
+    width: 50px;
+    height: 50px; 
+    position: absolute;
+    top: 60px;
+    left: 10px;
+  }
+
+/*tweet button */
+.btn-primary{
+    position: absolute;
+    left: 80%;
+    top: 70px;
+    background-color: rgb(75, 168, 207)!important;
+    border: 1px solid  rgb(26, 145, 218)!important;;
+    border-radius: 999px;
+    height: 39px;
+    margin: 0 0 0 10px;
+    min-height: 39px;
+    min-width: 62.79px;
+    padding: 0 15px;
+    font-size: 15px;
+    font-stretch: 100%;
+    font-style: normal;
+    font-weight: 700;
+    cursor: pointer;
+
+}
+.btn-primary:hover {
+    background-color: rgb(26, 145, 218)!important;
+
+
+}
+
+h3 a {
+    text-decoration: none;
+}
+/* waa upload image button ka  */
+#id_image {
+    background-attachment:scroll;
+    background-clip:border-box;
+/* background-color: rgb(26, 145, 218); */
+    position: absolute;
+    top:78px;
+    left: 20px;
+}
+/* waa divka samaynaya borderka ka hooseeya tweet formka */
+.under-tweet-form {
+    background-color: rgb(230, 236, 240);
+    /* border-bottom-color:rgb(0, 0, 0); */
+    /* border-bottom-style:solid; */
+    width: 100%;
+    height: 12px;
+    margin-top: 30px;
+}
+/* waa coloumn ka postada */
+.col-middle {
+    padding: 0;
+}
+/*content wrapper */
+.content-wrapper {
+    /* background-color: grey; */
+    position: relative;
+    /* height: 500px; */
+    /* width: 500px; */
+}
+/*waa user div wrapperka postada dhinaceeda yaala  */
+.user-wrapper {
+    /* background-color: lightblue; */
+    /* width: 49px; */
+    float: left;
+    clear: both;
+    /* position: relative; */
+
+    
+}
+/* waa user div wrapper image ka  */
+.user-wrapper img{
+    border-radius:9999px;
+    /* border-top-style:solid; */
+    width: 60px;
+    height: 60px; 
+    margin-left: 10px;
+    margin-top: 20px;
+}
+/* waa main post wrapperka  */
+.post-wrapper {
+    /* background-color: lightgreen; */
+    width: 535px;
+    float: right;
+    margin: 0 10px;
+    /* padding-top: 20px; */
+    padding: 0;
+    clear: both;
+}
+/* postada xageeda hoose ee tweet, comment, share, link */
+.post-bottom a{
+    color: rgb(101, 119, 134)!important;
+    font-size: x-large;
+    text-decoration: none;
+    margin-top: 10px;
+} 
+  
+
+
+/* left side nav */
+.left-sidenav p {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 2;
+    text-decoration: none;
+    color: black;
+}
+/* left side nav anchor  */
+.left-sidenav a {
+    color: black;
+}
+/* left side nav anchor hover */
+.left-sidenav a:hover {
+    display: block;
+    /* width: fit-content; */
+    width: initial;
+    color: rgba(29,161,242,1.00);
+    background-color: rgb(226, 238, 247);
+    
+    text-align: center;
+    text-decoration: none;
+    /* margin: 4px 2px; */
+    cursor: pointer;
+    border-radius: 15px ;
+}
+/* side nav active  */
+.left-sidenav active {
+    color: rgba(29,161,242,1.00);
+}
+/* awesome acons on the nav right side */
+.ta {
+    font-size: x-large;
+    font-weight: 60px;
+    margin-right: 20px;
+    
+}
+.ta a {
+    color: red;
+}
+/* search form on righ sie */
+.form-control:focus {
+    box-shadow: none;
+}
+
+.form-control-underlined {
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-radius: 0;
+    padding-left: 0;
+}
+
+.form-control::placeholder {
+    font-size: 1.1rem;
+    color: #aaa;
+
+}
+/* search box right side background */
+.bg-light {
+    background-color: #e3ebf5!important;
+}
+/* right side under search box */
+.you-might-like{
+    border-radius: 12px;
+    background-color: #f0f3f7;
+    text-decoration: none;
+
+}
+/* right side trending */
+.right-trending:hover {
+    background-color: #e7edf3;
+
+}
+.right-trending a{
+    text-decoration: none;
+}
+/* giv_post_tweet.html  wareeji markaad kala habaynayso saiay 
+isu leeyhiin app kasta iyo css tooda */
+/* replay tweet button */
+.btn-dark {
+    background-color: rgb(75, 168, 207)!important;
+
+    /* background-color: rgb(26, 145, 218)!important;*/  /*righ color for twitter*/
+    border: 1px solid  rgb(26, 145, 218)!important;
+    border-radius: 999px;
+    height: 39px;
+    margin: 0 0 0 10px;
+    min-height: 39px;
+    min-width: 62.79px;
+    margin-top: 30px;
+    margin-left: 80%;
+    padding: 0 15px;
+    font-size: 15px;
+    font-stretch: 100%;
+    font-style: normal;
+    font-weight: 700;
+    cursor: pointer;
+}
+/* replay tweet hover */
+.btn-dark:hover {
+    background-color: rgb(26, 145, 218)!important;;
+}
+/* giv_post_tweet.html */
+/* replay user image */
+.replay-user-picture img{
+    border-radius:9999px;
+    border-top-style:solid;
+
+    width: 70px;
+    height: 70px; 
+    position: absolute;
+    top: 200px;
+    left: 10px;
+}
+

@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}Home/ Twitter{% endblock title %}</title>
+    <link rel="icon" href="{% static "image/home/twitter.jpg"%}">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- our custom css  -->
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+    <link rel="stylesheet" href="{% static "css/user_profile.css" %}">
+    
+  </head>
+  <body>
+
+      <div class="container-fluid text-center mt-4">    
+        <div class="row content">
+          <div class="col- col-sm-4 col-md-4 col-lg-3">
+            <a href="/"><img src="{% static "image/home/twitter.jpg"%}" width="60" height="40"></a>
+            <div class="left-sidenav">  
+              <p><a href="/">Home</a></p>
+              <p></i><a href="#">Explore</a></p>
+              <p><a href="#">Notification</a></p>
+              <p><a href="#">Messages</a></p>
+              <p><a href="#">Bookmarks</a></p>
+              <p><a href="#">Lists</p>
+              <p><a href="{% url 'user_profile' user.username %}">Profile</a>
+              </p>
+              <!-- user logout in home page -->
+                {% if request.user.is_authenticated %}
+                  <a href="{% url 'logout' %}">Logout</a> @{{ request.user.username }}
+                {% else %}
+                  <a href="{% url 'login'%}">Login</a>
+                {% endif %}
+              
+              <p><a href="#">More</a></p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-8 col-md-8 col-lg-5  col-middle text-left border-left border-right">
+            {% block top-what-is-happening %} 
+              
+            
+              
+            {% endblock top-what-is-happening %} 
+          
+            {% block what-is-happening %} 
+              halkani waa top midddle block 
+            {% endblock what-is-happening %}
+
+            {% block home-content %}
+                <h1>Welcome</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <hr>
+                <a href="hh">halllala</a>
+                <h3>Test</h3>
+                <p>Lorem ipsum...</p>
+            {% endblock home-content %}
+          </div>
+          
+          {% block righ-side-search%}
+          <div class="col-lg-3  d-none d-sm-none d-md-none d-lg-block sidenav">
+            <form action="" method="get">
+              <div class="p-1 bg-light  rounded rounded-pill shadow-sm mb-4">
+                <div class="input-group">
+                  <input type="search" placeholder="Search Twitter" name="q" aria-describedby="button-addon1" class="form-control border-0 bg-light">
+                  <div class="input-group-append">
+                    <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            {% endblock righ-side-search%}
+            
+            
+            {% block top-you-might-like %}
+            
+            {% endblock top-you-might-like %}
+            
+              <div class="you-might-like">
+                {% block you-might-like %}
+                
+                  <p class="text-left ml-3 pt-3 font-weight-bolder  bg-dark">Trends for you</p>
+                  <hr>
+                  <p>Lorem ipsum dolor sit amet consectetur hahahahh
+                    adipisicing elit. Consequatur minima amet facere, 
+                    illum repellat adipisci, tempora porro eum quasi 
+                    recusandae animi quis veniam dolores libero repu
+                    diandae nihil rem nam tempore.
+                  </p>
+                {% endblock you-might-like %}
+              </div>
+               {% block who-to-follow %}
+               {% endblock who-to-follow %}
+            </div>
+        </div>
+      </div>
+
+     <!-- HHHHHHHHHHHH -->
+
+<!-- Material form login -->
+     <!-- HHHHHHHHHHHHH -->
+
+
+    
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+      <script>
+      var csrftoken = $.cookie('csrftoken');
+      function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+      }
+      });
+          $(document).ready(function(){
+              {% block domready %}
+              {% endblock %}
+          })
+    
+      </script>
+    </body>
+  </html>

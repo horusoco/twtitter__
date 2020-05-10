@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block what-is-happening %}
+.
+{% endblock what-is-happening %}
+
+
+
+
+{% block home-content %}
+    <div class="user-wrapper"> 
+        <img src="{{ post.user.profile.photo.url }}">{{ post.user }}&nbsp;@{{ post.user.username}}   
+    </div>
+
+   <div class="post-wrapper col-10 col-md-10 col-sm-10 col-lg-10">  
+        <div class="card">
+            <!-- {% if post.image %} 
+                <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap" width="520" height="285">
+            {% endif %}  -->
+            <div class="card-bod">
+                <h2 class="card-title"></h2>
+                <p class="card-text text-center">{{ post.content }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4">
+    <form action="{% url 'give_post_tweet' post.id %}" method="POST">
+        {{ form.content  }}
+        {% csrf_token  %}
+        <button type="submit" class="btn btn-dark ">Replay</button>
+    </form>
+
+    <div class="replay-user-picture">
+        <img src="{{ request.user.profile.photo.url}}" alt="">
+    </div>
+ </div>
+{% endblock home-content  %}
+
+
+
+    

@@ -1,0 +1,16 @@
+
+<form action="" method="POST">
+	{% csrf_token %}
+	<b>Delete Tweet</b>
+	<p>Theis can't be undone and it will be romoved
+        from your profile, the timeline of any accounts
+        that follow you and from Twitter search results.
+    </p>
+
+    <button type="button" class="btn btn-secondary" style="background-color: lightgray;"><a href="{% url 'user_profile' request.user.username %}" style="color: black;">cancel</a></button>
+
+   <button type="submit" class="btn btn-danger">Delete</button>
+  
+</form>
+
+

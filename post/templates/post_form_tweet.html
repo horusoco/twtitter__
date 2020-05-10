@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block what-is-happening%}
+    <form action="" method="POST">
+        {{ form.image }}
+        {{ form.content}}
+        {% csrf_token %}
+        <input type="submit" value="tweet">
+    </form>
+{% endblock what-is-happening%}
