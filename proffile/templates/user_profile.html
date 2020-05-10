@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+   
+    {% block title %}
+        {{ request.user.username}}
+    {% endblock title %}
+
+<!--  -->
+
+
+<!-- <div class="col-8 col-sm-8 col-md-8 col-lg-5  col-middle text-left border-left border-right"> -->
+{% block top-what-is-happening %} 
+    <!--back home arrow and username -->
+    <a href="/"><i class="fa fa-arrow-left"></i></a>
+    <p class="pl-5" t-5><b>{{ user.username }}</b><br>
+        {{ user.user_posts.count }} Tweets</p>
+
+    <!-- user cover page picture -->
+    <div class="user-cover-picture">
+        {% if user.profile.cover_picture %}
+            {% load thumbnail %}
+            {% thumbnail  user.profile.cover_picture "623x220" as im %}
+                <!-- <a href="{{ post.image.url }}"> enlarge the image -->
+                <a href="{{ user.profile.cover_picture.url }}"> <!-- enlarge user cover picture to full size on the screen -->
+                <img src="{{ im.url }}" alt=""> 
+            </a>
+            {% endthumbnail %}
+           
+
+            <!-- <a href="{{ user.profile.cover_picture.url }}"> <!-- enlarge user cover picture to full size on the screen -->
+            <!-- <img src="{{ user.profile.cover_picture.url }}" class="img-fluid" alt="" width="630" height="199"> -->
+            <!-- </a> --> 
+
+        {% else %}
+        <!-- if not user upload cover picture we give profile picture as cover picture -->
+            {% load thumbnail %}
+                {% thumbnail  user.profile.photo "623x220" as im %}
+                <a href="{{ user.profile.photo.url }}"> <!-- enlarge user cover picture to full size on the screen -->
+                <img src="{{ im.url }}" alt=""> 
+            {% endthumbnail %}
+        {% endif %}
+    </div>
+   
+    <!-- user profile picture  -->
+    <div class="user-profile-picture">
+        <a href="{{ user.profile.photo.url }}">
+        <img src="{{ user.profile.photo.url }}" class="img-fluid" alt="" width="60" height="50">
+        </a>
+    </div>
+                
+{% endblock top-what-is-happening %} 
+
+    
+{% block what-is-happening %}
+
+   <!-- user profile username and follow/unfollow button -->
+    <div class="user-info">
+        <div class="row">
+            <div class="col">
+                <p class="ml-4"><b>{{ user.username }}</b><br>
+                    @{{ user.username }}
+                </p>
+            </div>
+            <div class="col">
+                <!-- empty ayaynu u daynay si aynu colomn 4 ka follow/unfollow rightka u tago  -->
+            </div>
+            <div class="col">
+                <!-- empty ayaynu u daynay si aynu colomn 4 ka follow/unfollow rightka u tago  -->
+
+         </div>
+            <div class="col user-profile-follow-button">
+                {% if request.user not in user.profile.following.all %}
+                <p><a href="">follow</a></p>
+                {% else %}
+                <a href="" class="unfollow">Unfollow</a>
+                {% endif %}
+            </div>
+        </div>
+      
+        <!-- user description -->
+        <p class="mt-2 px-2 text-muted ">{{ user.profile.description|stringformat:".100s" }} .</p>
+        <p class="mt-2 pl-2  text-primar"><i class="fa fa-link"></i>{{ user.profile.link }}&nbsp;&nbsp; <i class="fa fa-table"></i> Joined {{ user.profile.date_joinded }}</p>
+        <P class="pl-2 text-muted"></P><b>{{ user.profile.following.count }}</b>
+            folowing &nbsp;&nbsp;<b>{{ user.followers.count }}</b> folowers </P>
+    </div>
+
+{% endblock what-is-happening %}
+
+{% block home-content %}
+<!-- nav in the under user description -->
+<nav class="nav-user-profile col">
+    <ul class="nav justify-content-center">
+        <div class="col">
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'user_profile' request.user.username %}">Tweets</a>
+        </li>
+        </div>
+        <div class="col-">
+        <li class="nav-item">
+        <a class="nav-link" href="#">Tweets & replies</a>
+        </li>
+        </div>
+        <div class="col">
+        <li class="nav-item">
+        <a class="nav-link" href="#">Media</a>
+        </li>
+        </div>
+        <div class="col">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Likes</a>
+        </li>
+        </div>
+    </ul>
+</nav>
+<hr>
+<!-- ############# -->
+  <div class="content-wrapper">
+      {% for post in user_posts %}  
+        <!-- starts  post wrapper -->
+        <div class="user-wrapper"> 
+            <!-- userka postada soo dhigay  -->
+          <img src="{{ post.user.profile.photo.url }}">{{ post.user }}&nbsp;@{{ post.user.username}}   
+        </div>
+        <!-- post middle wrappper--> 
+        <div class="post-wrapper col-10 col-md-10 col-sm-10 "> 
+            <div class="delete-dropdown col col-lg-2 offset-lg-10">
+
+        <!-- Default dropup button -->
+        {% if post.user == request.user %}<!-- ka qari userada kale delete optionka  -->
+        <div class="btn-group dropup delete-button">
+            <button type="button" class="delete-button btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            
+            </button>
+            <div class="dropdown-menu">
+                <!-- deletekani waa modal laakiin ma shaqaynayo oo wuxuu u delete garanayaa as list  -->
+                <a><p class="text-left" data-toggle="modal" data-target="#exampleModal" style="color: red;">Modal Delete</p></a>
+                <!-- deletkani waa kii saxda ahaa ee idga isticmaalayey -->
+                <a href="{% url 'delete' post.id %}">Norlmal Delete</a>
+            </div>
+                    
+            <!-- Modal -->
+            <!-- modal kani waa ka deleteka postada userka laakiin si sax uma shaqaynayo maaddama aanu helayn id la delete garaynayo  -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="{% url 'delete' post.id %}" method="POST">
+                                {% csrf_token %}
+                                <b>Delete Tweet</b>
+                                <p>Theis can't be undone and it will be romoved
+                                    from your profile, the timeline of any accounts
+                                    that follow you and from Twitter search results.
+                                </p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" style="background-color: lightgray;"><a href="{% url 'user_profile' request.user.username %}" style="color: black;">cancel</a></button>
+                                    
+                                    <button type="submit" class="btn btn-danger" style="">Delete</button>
+                                
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- modal -->
+        </div>
+        {% endif %}
+
+           </div>
+                <div class="card">
+                    {% if post.image %} 
+                        <!-- load thumbnail for postada dhexda taala-->
+                        {% load thumbnail %}
+                        <!-- {% thumbnail post.image "520x285" as im %} -->
+                            <!-- <a href="{{ post.image.url }}"> enlarge the image -->
+                            <!-- <img src="{{ im.url }}"> -->
+                        </a>
+                         {% endthumbnail %}
+                            <!-- postada dhexda taala -->
+                        <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap" width="520" height="285">
+                        
+                            
+                         
+                    {% endif %} 
+                    
+                    <div class="card-bod">
+                        <h2 class="card-title"></h2>
+                        <p class="card-text text-center">{{ post.content }}</p>
+                    </div>
+              </div>
+              <!-- ######################## -->         
+
+              <!-- ###################### -->
+          
+                    <!-- starts under post  -->
+                <div class="container">
+                    <div class="row">
+                        <!-- comment -->
+                        <div class="col post-bottom">
+                            <a href="{% url "give_post_tweet" post.id %}" <i class=" fa fa-comment"></i></i></a>
+                            {{ post.comments.count }}
+                        </div>
+
+                        <!-- retweet -->
+                        <div class="col post-bottom">
+                            <a href="" <i class="fa fa-retweet"></i></a>
+                        </div>
+                        <!-- like -->
+                        <div class="col post-bottom">
+                            {% with total_likes=post.users_like.count users_like=post.users_like.all %}
+                                <a href="" <i class="fa fa-heart"></i></a>
+                                {{ total_likes }}
+                                    
+                                {% endwith %}
+                            <!-- {% if not request.user in post.users_like.all %}
+                                <a href="">like</a>
+                            {% else %}
+                                <a href="">Unlike</a>
+                            {% endif %} -->
+                        </div>
+                            <!-- share or bookmark  -->
+                            <div class="col post-bottom">
+                            <a href="" <i class="fa fa-download"></i></a>
+                        </div>
+                    </div>
+                    <!-- end under post -->
+                </div>
+            <!-- end post wrapper-->
+            </div>
+      {% endfor %}   
+        </div>
+      
+{% endblock home-content %}
+
+{% block top-you-might-like %}
+    <!-- right side for user 6 posts images -->
+    <div class="haye"> 
+    {% for post in postss %}
+   
+        {% if post.image %}
+            <!-- {% load thumbnail %}
+                {% thumbnail post.image "100x90" as im %}
+                  
+                    <img src="{{ im.url }}">
+                </a>
+            {% endthumbnail %} -->
+           
+            <img src="{{ post.image.url }}" class="pt-1" alt="" width="100" height="90">
+            
+
+
+            {% endif %}
+    {% endfor %}
+    </div>
+
+{% endblock top-you-might-like %}
+
+<!-- your sugesstion users to follow  -->
+{% block you-might-like %}   
+    <p class="text-left ml-3 mt-3 pt-3 font-weight-bolder">You might like</p>
+   
+    {% for user in users %}
+   <div class="container bg-primar">
+   
+       <div class="row you-might-like_user">
+       
+           <div class="col-lg-2"> 
+            <img src="{{ user.profile.photo.url }}" class="float-left" alt="" width="60">
+           </div>
+           <div class="col-lg-3 "> 
+               <b><a href="{% url 'user_profile' user.username %}" style="color: black;">{{ user.username}}</a></b><br>
+               <span class="text-muted">@{{ user.username}}</span>
+           </div>
+           <div class="col-lg-5">
+            <p class="user-follow"><a href="">follow</a></p>
+           </div>
+           <hr>
+       </div>
+    
+   </div>
+   {% endfor %}
+   </div>
+ 
+{% endblock you-might-like %}    
+
+{% block domready %}
+$('a.like').click(function(e){
+e.preventDefault();
+$.post('{% url "like" %}',
+{
+id: $(this).data('id'),
+action: $(this).data('action')
+},
+function(data){
+if (data['status'] == 'ok')
+{
+var previous_action = $('a.like').data('action');
+// toggle data-action
+$('a.like').data('action', previous_action == 'like' ?
+'unlike' : 'like');
+// toggle link text
+$('a.like').text(previous_action == 'like' ? 'Unlike' :
+'Like');
+// update total likes
+var previous_likes = parseInt($('span.count .total').
+text());
+$('span.count .total').text(previous_action == 'like' ?
+previous_likes + 1 : previous_likes - 1);
+}
+}
+);
+});
+
+
+{% endblock %}
+
+                                            

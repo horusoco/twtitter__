@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+<!-- waa top middle home page  -->
+{% block what-is-happening %}
+<div class="col-12 col-md-12">
+    <a href="/"><span class="top-home"><h3>Home</h3></span></a>
+  </div>
+  <hr>
+  
+<div class="tweet-upload">
+    <img src="{{ request.GET.image.url }}">
+    <form action="" method="POST" enctype="multipart/form-data" novalidate>
+        {% if form %}  <!-- hadii ay jirto form veriable-->
+            
+        <!-- <label for="{{ form.image.id_for_label }}">upload</label> -->
+            {{ form.image }}
+        <!-- <label for="{{ form.content.id_for_label }}">Content</label> -->
+            {{ form.content}}
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-primary tweet-button">Tweet</button>
+            
+        {% endif %}
+    </form>
+</div>
+<!-- user profile picture inside tweet search box  -->
+<div class="profile-image">
+    {% for user in users %}
+        <a href="{% url 'user_profile' request.user.username %}"><img src="{{ request.user.profile.photo.url}}" alt=""></a>
+    {% endfor %}
+</div>
+{% endblock what-is-happening%}
+
+<!-- waa middle home pageka xaga postada la soo dhigo -->
+{% block home-content %}
+
+     <div class="under-tweet-form">  <!--divka samaynaya borderka ka hooseeya tweet formaka -->
+    </div>
+
+    <div class="content-wrapper">
+      {% for post in posts %}  
+    
+            <!-- user wrappper -->
+            <div class="user-wrapper mt- "> 
+                <a href="{% url 'user_profile' post.user.username %}"><img src="{{ post.user.profile.photo.url }}"></a>
+                <a href="{% url 'user_profile' post.user.username %}">{{ post.user }}</a>&nbsp;@{{ post.user.username}}
+              </div>
+              <!-- starts  post wrapper -->
+              <div class="post-wrapper col-10 col-md-10 col-sm-10 mt-">  
+                  <div class="card">
+                      {% if post.image %} 
+                      <!-- thumbnail for post in the timeline -->
+                        {% load thumbnail %}
+                            {% thumbnail post.image "517x285" crop="" as im %}
+                                <!-- <a href="{{ post.image.url }}"> enlarge the image -->
+                                <!-- <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"> -->
+                                <img src="{{ im.url }}">
+                            </a>
+                        {% endthumbnail %}
+                      
+                          <!-- <a href="#"><img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap" width="520" height="285"></a> -->
+                      {% endif %} 
+                      <div class="card-bod">
+                          <h2 class="card-title"></h2>
+                          <p class="card-text text-center">{{ post.content }}</p>
+                      </div>
+                  </div>
+                  <!-- starts under post -->
+                  <div class="container">
+                      <div class="row">
+                          <!-- post comment count  -->
+                          <div class="col post-bottom">
+                              <a href="{% url "give_post_tweet" post.id %}" <i class=" fa fa-comment"></i></i></a>
+                              {{ post.comments.count }}
+                          </div>
+                  
+                          <!-- post retweet -->
+                          <div class="col post-bottom">
+                              <a href="" <i class="fa fa-retweet"></i></a>
+                          </div>  
+                          <!-- -->
+                          <!-- post like and count  -->
+                            <div class="image-info">
+                                <div>
+                                    <span class="count">
+                                    {% with total_likes=post.users_like.count users_like=post.users_like.all %}
+                                    <span class="total">{{ total_likes }}</span>
+                                    like{{ total_likes|pluralize }}
+                                    </span>
+                                    <a href="#" data-id="{{ post.id }}" data-action="{% if request.user in post.users_like.all %}un{% endif %}like" class="like button">
+                                    {% if request.user not in post.users_like.all %}
+                                    Like
+                                    {% else %}
+                                    Unlike
+                                    {% endif %}
+                                    </a>
+                                    {% endwith %}
+                                </div>
+                            </div>
+                                
+                            
+                          <!-- post link, singka waxaynu isticmaalnay downloand sign -->
+                          <div class="col post-bottom">
+                              <a href="" <i class="fa fa-download"></i></a>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- end under post -->
+              <!-- end post wrapper-->
+              </div>
+        {% empty %}
+            <h4>nothing found </h4>
+      {% endfor %}   
+
+      </div>
+  {% endblock home-content %}
+
+<!-- waa right side bar under search input -->
+{% block you-might-like %}
+<p class="text-left ml-3 mt-3 pt-3 font-weight-bolder">Trends for you</p>
+<hr>
+    <div class="text-left pl-3 ">
+    {% for user in users %}
+    <a href="">
+        <div class="right-trending" style="color: black;">
+            {% if user.user_posts.count  > 1 %}
+             {{ user.username }} .Trending<br>
+                <b>{{ user.username }}</b><br>
+                {{ user.user_posts.count }} Tweets
+            {% endif %}
+        </div>
+    </a>
+        <hr>
+    {% endfor %}
+</div>
+{% endblock you-might-like %}  
+
+<!-- user suggestion to follow in the righ side bar under user trending -->
+{% block who-to-follow %}
+    <div class="mt-3 you-might-like">
+    <p class="text-left ml-3 mt-3 pt-3 font-weight-bolder">Who to follow</p>
+
+    {% for user in users_to_follow %}
+    <div class="container">
+    <div class="row you-might-like_user">
+        
+        <div class="col-lg-2"> 
+            <a href="{% url 'user_profile' user.username %}">
+            <img src="{{ user.profile.photo.url }}" class="float-left" alt="" width="60">
+            </a>
+        </div>
+        <div class="col-lg-3 "> 
+            <b><a href="{% url 'user_profile' user.username %}" style="color: black;">{{ user.username}}</a></b><br>
+            <span class="text-muted">@{{ user.username}}</span>
+        </div>
+       
+        <div class="col-lg-5">
+            <p class="user-follow"><a href="">follow</a></p>
+        </div>
+    
+        <br>
+        <hr>
+    </div>
+
+    </div>
+    
+    {% endfor %}
+   
+{% endblock who-to-follow %}
+
+
+ 
+
+{% block domready %}
+$('a.like').click(function(e){
+e.preventDefault();
+$.post('{% url "like" %}',
+{
+id: $(this).data('id'),
+action: $(this).data('action')
+},
+function(data){
+if (data['status'] == 'ok')
+{
+var previous_action = $('a.like').data('action');
+// toggle data-action
+$('a.like').data('action', previous_action == 'like' ?
+'unlike' : 'like');
+// toggle link text
+$('a.like').text(previous_action == 'like' ? 'Unlike' :
+'Like');
+// update total likes
+var previous_likes = parseInt($('span.count .total').
+text());
+$('span.count .total').text(previous_action == 'like' ?
+previous_likes + 1 : previous_likes - 1);
+}
+}
+);
+});
+{% endblock %}
+ -->
