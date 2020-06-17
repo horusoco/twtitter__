@@ -32,21 +32,23 @@
 
         {% else %}
         <!-- if not user upload cover picture we give profile picture as cover picture -->
-            {% load thumbnail %}
-                {% thumbnail  user.profile.photo "623x220" as im %}
-                <a href="{{ user.profile.photo.url }}"> <!-- enlarge user cover picture to full size on the screen -->
-                <img src="{{ im.url }}" alt=""> 
-            {% endthumbnail %}
+        {% load thumbnail %}
+           
+        {% thumbnail  user.profile.photo "623x220" as im %}
+        <a href="{{ user.profile.photo.url }}"> <!-- enlarge user profile picture to full size on the screen -->
+        <img src="{{ im.url }}" alt=""> 
+    
+    {% endthumbnail %}
         {% endif %}
     </div>
-   
+  
     <!-- user profile picture  -->
     <div class="user-profile-picture">
-        <a href="{{ user.profile.photo.url }}">
+        <a href="{{ user.profile.photo.url }}"> <!-- enlarge user profile picture to full size on the screen -->
         <img src="{{ user.profile.photo.url }}" class="img-fluid" alt="" width="60" height="50">
         </a>
     </div>
-                
+               
 {% endblock top-what-is-happening %} 
 
     
@@ -65,22 +67,33 @@
             </div>
             <div class="col">
                 <!-- empty ayaynu u daynay si aynu colomn 4 ka follow/unfollow rightka u tago  -->
-
-         </div>
-            <div class="col user-profile-follow-button">
-                {% if request.user not in user.profile.following.all %}
-                <p><a href="">follow</a></p>
-                {% else %}
-                <a href="" class="unfollow">Unfollow</a>
-                {% endif %}
             </div>
+
+            {% if not user == request.user  %}
+            <div class="col user-profile-follow-button">
+                <a href="#" data-id="{{ post.id }}" data-action="{% if request.user in user.following.all %}un{% endif %}follow" class="follow button">
+                    {% if request.user not in user.followers.all %}
+                    Follow
+                    {% else %}
+                    following
+                    {% endif %}
+                    </a>
+            </div>
+            {% else %}
+            <div class="user-profile-follow-button mr-5">
+                <a href="{% url 'edit'%}" class="edit">Edit Profile</a>
+            </div>
+
+            {% endif %}
         </div>
       
         <!-- user description -->
         <p class="mt-2 px-2 text-muted ">{{ user.profile.description|stringformat:".100s" }} .</p>
-        <p class="mt-2 pl-2  text-primar"><i class="fa fa-link"></i>{{ user.profile.link }}&nbsp;&nbsp; <i class="fa fa-table"></i> Joined {{ user.profile.date_joinded }}</p>
-        <P class="pl-2 text-muted"></P><b>{{ user.profile.following.count }}</b>
-            folowing &nbsp;&nbsp;<b>{{ user.followers.count }}</b> folowers </P>
+        <p class="mt-2 pl-2  text-muted"><i class="fa fa-link"></i>{{ user.profile.link }}&nbsp;&nbsp; <i class="fa fa-table"></i> Joined {{ user.profile.date_joinded }}</p>
+        <P class="pl-2 text-muted"><b>{{ user.following.count }}</b>
+            <a href="{% url 'users_following' user.username %}" class="text-muted" style="color: black;">following</a> &nbsp;&nbsp;<b>{{ user.followers.count }}</b> 
+            <a href="{% url 'users_followers' user.username%}" class="text-muted" style="color: black;">followers</a>
+        </P>
     </div>
 
 {% endblock what-is-happening %}
@@ -112,59 +125,74 @@
     </ul>
 </nav>
 <hr>
-<!-- ############# -->
+<!-- END nav -->
   <div class="content-wrapper">
-      {% for post in user_posts %}  
+    {% for post in user_posts %}  
         <!-- starts  post wrapper -->
         <div class="user-wrapper"> 
             <!-- userka postada soo dhigay  -->
-          <img src="{{ post.user.profile.photo.url }}">{{ post.user }}&nbsp;@{{ post.user.username}}   
+          <a href="{% url 'user_profile' post.user.username %}">
+            <img src="{{ post.user.profile.photo.url }}"></a>{{ post.user }}&nbsp;@{{ post.user.username}}   
         </div>
         <!-- post middle wrappper--> 
         <div class="post-wrapper col-10 col-md-10 col-sm-10 "> 
             <div class="delete-dropdown col col-lg-2 offset-lg-10">
-
+        <!-- DELETE -->
         <!-- Default dropup button -->
         {% if post.user == request.user %}<!-- ka qari userada kale delete optionka  -->
-        <div class="btn-group dropup delete-button">
+        <!-- start modal delete -->
+        <div class="btn-group dropup  offset-sm-11 offset-lg-7">
             <button type="button" class="delete-button btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             
             </button>
-            <div class="dropdown-menu">
-                <!-- deletekani waa modal laakiin ma shaqaynayo oo wuxuu u delete garanayaa as list  -->
-                <a><p class="text-left" data-toggle="modal" data-target="#exampleModal" style="color: red;">Modal Delete</p></a>
+            <div class="dropdown-menu offset-lg-2 mr-5">
+                <a><p class="text-left" data-toggle="modal" data-target="#hassan{{post.id}}" style="color: red;">Modal Delete</p></a>
                 <!-- deletkani waa kii saxda ahaa ee idga isticmaalayey -->
-                <a href="{% url 'delete' post.id %}">Norlmal Delete</a>
+                <!-- <a href="{% url 'deletee' post.id %}" class="delete"> normal Delete</a> 
+                 -->
+                
+                 <!-- <a href="#" data-id="{{ post.id }}" data-url="{% url 'deletee' post.id %} class="delete">deletee</a> -->
+                 <input class="delete" id="{{ post.id }}"  data-url='{% url "deletee" post.id %}' value="Effacer">
+
+
             </div>
                     
             <!-- Modal -->
-            <!-- modal kani waa ka deleteka postada userka laakiin si sax uma shaqaynayo maaddama aanu helayn id la delete garaynayo  -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        
+            <div class="modal fade" id="hassan{{ post.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <!-- si uu modelku u shaqeeyo waa inay isku ahaadaan data-target ID iyo modal ID-->
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content offset-sm-8">
+                        
                         <div class="modal-body">
                             <form action="{% url 'delete' post.id %}" method="POST">
                                 {% csrf_token %}
-                                <b>Delete Tweet</b>
-                                <p>Theis can't be undone and it will be romoved
+                                <p class="text-center"><b>Delete Tweet ?</b></p>
+                                
+                                <p>This can't be undone and it will be romoved
                                     from your profile, the timeline of any accounts
                                     that follow you and from Twitter search results.
                                 </p>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" style="background-color: lightgray;"><a href="{% url 'user_profile' request.user.username %}" style="color: black;">cancel</a></button>
+                                <div class="modal-foote text-center">
+                                    <button type="button" class="btn btn-secondary modal-btn-secondray" style="background-color: lightgray;"><a href="{% url 'user_profile' request.user.username %}">Cancel</a></button>
                                     
-                                    <button type="submit" class="btn btn-danger" style="">Delete</button>
+                                    <button type="submit" class="btn btn-danger modal-btn-danger">Delete</button>
                                 
                                 </div>
                             </form>
+                            
+
                         </div>
+                   
                     </div>
                 </div>
             </div>
-            <!-- modal -->
         </div>
+        <!-- end modal delete-->
         {% endif %}
+        <!-- END DELETE -->
 
+        <!-- START MIDDLE POST  -->
            </div>
                 <div class="card">
                     {% if post.image %} 
@@ -226,11 +254,13 @@
                 </div>
             <!-- end post wrapper-->
             </div>
-      {% endfor %}   
+    {% endfor %}   
         </div>
+    <!-- END POST MIDDLE -->
       
 {% endblock home-content %}
 
+<!-- START USER POST IMAGES -->
 {% block top-you-might-like %}
     <!-- right side for user 6 posts images -->
     <div class="haye"> 
@@ -253,6 +283,7 @@
     </div>
 
 {% endblock top-you-might-like %}
+<!-- END USER POST IMAGES  -->
 
 <!-- your sugesstion users to follow  -->
 {% block you-might-like %}   
@@ -260,7 +291,8 @@
    
     {% for user in users %}
    <div class="container bg-primar">
-   
+       <!-- don'nt show me the user Im following  -->
+        {% if user not in request.user.following.all %}
        <div class="row you-might-like_user">
        
            <div class="col-lg-2"> 
@@ -271,46 +303,32 @@
                <span class="text-muted">@{{ user.username}}</span>
            </div>
            <div class="col-lg-5">
-            <p class="user-follow"><a href="">follow</a></p>
+            <p class="user-follow">
+                {% if request.user not in user.followers.all %}
+                <a href="">Follow</a>
+                {% else %}
+                <a href="">Unfollow</a>
+                {% endif%}
+            
+            </p>
            </div>
            <hr>
        </div>
-    
+    {% endif %}
    </div>
    {% endfor %}
+
    </div>
  
 {% endblock you-might-like %}    
+<!-- END sugesstion users to follow  -->
 
 {% block domready %}
-$('a.like').click(function(e){
-e.preventDefault();
-$.post('{% url "like" %}',
-{
-id: $(this).data('id'),
-action: $(this).data('action')
-},
-function(data){
-if (data['status'] == 'ok')
-{
-var previous_action = $('a.like').data('action');
-// toggle data-action
-$('a.like').data('action', previous_action == 'like' ?
-'unlike' : 'like');
-// toggle link text
-$('a.like').text(previous_action == 'like' ? 'Unlike' :
-'Like');
-// update total likes
-var previous_likes = parseInt($('span.count .total').
-text());
-$('span.count .total').text(previous_action == 'like' ?
-previous_likes + 1 : previous_likes - 1);
-}
-}
-);
-});
+   $('.edit').click(function(e){
+       e.preventDefault()
+       $.ajax({% url 'edit' %})
 
-
-{% endblock %}
-
-                                            
+   })
+{% endblock domready%}
+    
+    

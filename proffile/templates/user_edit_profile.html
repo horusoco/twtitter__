@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block home-content %}
+    <form action="" method="POST">
+        {{ edit_profile_form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="save">
+    </form>
+{% endblock home-content %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+    {% block top-what-is-happening %}
+         <!--back home arrow and username -->
+     
+         <a href="/"><i class="fa fa-arrow-left"></i></a>
+         <p class="pl-5" t-5><b>{{ user.username }}</b><br>@{{ user.username }}
+    {% endblock top-what-is-happening %}
+    <
+    
+    {% block what-is-happening %} 
+            .
+    {% endblock what-is-happening %}
+    
+    {% block home-content %}
+      
+        <div class="row">
+            <div class="col">
+                <a href="" class="offset-md-4"><b><a href="{% url 'users_following' user.username %}">following</a></b></a>
+            </div>
+            <div class="col">
+                <a href="" class="offset-md-4"><b><a href="{% url 'users_followers' user.username %}">followers</a></b></a>
+
+            </div>
+        </div>
+        <!-- waa divka samynaya horizantal lineka -->
+        <div>
+            <hr>
+        </div>
+    
+        <!-- user followers you-->
+        <div class="container bg-primar">
+            {% for user in user_followers %}
+            <div class="row you-might-like_user">
+                <div class="col-lg-12 user_following">
+                    <div class="row">
+                    <div class="col-lg-2 mt-2"> 
+                        <img src="{{ user.profile.photo.url }}" class="float-left mt-" alt="" width="60">
+        
+                        <div class="col-lg-3 "> 
+                            <b class="ml-3"><a href="{% url 'user_profile' user.username %}" style="color: black;">{{ user.username}}</a></b><br>
+                            <span class="text-muted ml-3">@{{ user.username}}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 offset-md-7 mt-2">
+                        <p class="user-follow">
+                            <!-- userada i follow gareeya aniga -->
+                            {% if user in request.user.followers.all %}
+                            <a href="">unFollow</a>
+                            {% else %}
+                            <a href="">follow</a>
+                            {% endif%}
+                        </p>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+                <div class="">
+                    <hr>
+                </div>
+            {% endfor%} 
+        </div>    
+    {% endblock home-content %}
+
+    {% block you-might-like %}   
+
+    <p class="text-left ml-3 mt-3 pt-3 font-weight-bolder"><h4>what is happening</h4></p>
+    <p>Here is the news happening now but not yet </p> 
+ 
+    {% endblock you-might-like %} 
+    
+    
+    
+    

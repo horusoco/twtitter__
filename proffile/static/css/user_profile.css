@@ -107,7 +107,6 @@
     font-weight: 700;
     font-size: 20px;
     margin: 0;
-    
 }
 .nav-user-profile a:hover{
     background-color: rgb(233, 243, 248)!important;
@@ -116,25 +115,66 @@
 hr {
     margin: 2px;
 }
-
-/* delete post in the user profile */
- .delete-button button{
+/* delete dropup icon in post/tweet in the user profile */
+.delete-button{
     background-color: white;
     color: grey;
     border: none;
 }
- /* .delete-button a{
-    color: red;
-} */
-.delete-button button:hover{
+
+.delete-button:hover{
     background-color: rgb(231, 240, 245)!important; 
     color: rgb(26, 145, 218)!important;
-    border-radius: 999px;     
+    border-radius: 9999px;     
 }
 
-/* .delete-button button:hover{
-    background-color: rgb(217, 233, 241)!important;
-    color: rgb(26, 145, 218)!important;
-    border-radius: 15px;
-}  */
+/* Modal delete */
+.modal-content{
+    align-items: center;
+    border-radius: 14px;
+    max-height:100%;
+    max-width:600px;
+    width: 370px;
+    height: 270px;
+    margin-left: 80px;
+    padding-bottom:30px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:30px;
+    position: relative;;
+    top: 300px;
+}
+.modal-content a{
+    text-decoration: none;
+    color: black;
+}
+.modal-btn-danger{
+    background-color:rgb(224, 36, 94);
+    border-bottom-color:rgba(0, 0, 0, 0);
+    border-radius: 9999px;
+    width: 132px;
+    height: 39px;
+    font-weight: 700;
+    font-size: 15px;    
+}
+
+.modal-btn-secondray {
+    /* border-bottom-color:rgba(0, 0, 0, 0); */
+    border-style: none;
+    color: black;
+    border-radius: 9999px;
+    width: 132px;
+    height: 39px;
+    font-weight: 700;
+    font-size: 15px;
+    
+}
  
+/* user following section*/
+.user_following:hover {
+    background-color: rgb(242, 246, 248)!important; 
+    cursor: pointer;
+    width: 100%;
+
+}
+

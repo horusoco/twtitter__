@@ -111,7 +111,7 @@
             <h4>nothing found </h4>
       {% endfor %}   
 
-      </div>
+    </div>
   {% endblock home-content %}
 
 <!-- waa right side bar under search input -->
@@ -119,19 +119,19 @@
 <p class="text-left ml-3 mt-3 pt-3 font-weight-bolder">Trends for you</p>
 <hr>
     <div class="text-left pl-3 ">
-    {% for user in users %}
-    <a href="">
-        <div class="right-trending" style="color: black;">
-            {% if user.user_posts.count  > 1 %}
-             {{ user.username }} .Trending<br>
-                <b>{{ user.username }}</b><br>
-                {{ user.user_posts.count }} Tweets
-            {% endif %}
-        </div>
-    </a>
-        <hr>
-    {% endfor %}
-</div>
+        {% for user in users %}
+        <a href="{% url 'user_profile' user.username %}">
+            <div class="right-trending" style="color: black;">
+                {% if user.user_posts.count  > 1 %}
+                {{ user.username }} .Trending<br>
+                    <b>{{ user.username }}</b><br>
+                    {{ user.user_posts.count }} Tweets
+                {% endif %}
+            </div>
+        </a>
+            <hr>
+        {% endfor %}
+    </div>
 {% endblock you-might-like %}  
 
 <!-- user suggestion to follow in the righ side bar under user trending -->

@@ -123,3 +123,9 @@ def like(request):
 
 def login(request):
     return render(request, 'registration/login.html', {})
+
+
+
+def post_detail(request, id):
+    post = get_object_or_404(Post, id=id)
+    return render(request, 'post_detail.html', {'post':post})
