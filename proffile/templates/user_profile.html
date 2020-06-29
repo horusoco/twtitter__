@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
    
     {% block title %}
         {{ request.user.username}}
@@ -23,32 +25,31 @@
                 <a href="{{ user.profile.cover_picture.url }}"> <!-- enlarge user cover picture to full size on the screen -->
                 <img src="{{ im.url }}" alt=""> 
             </a>
-            {% endthumbnail %}
-           
-
-            <!-- <a href="{{ user.profile.cover_picture.url }}"> <!-- enlarge user cover picture to full size on the screen -->
-            <!-- <img src="{{ user.profile.cover_picture.url }}" class="img-fluid" alt="" width="630" height="199"> -->
-            <!-- </a> --> 
-
-        {% else %}
-        <!-- if not user upload cover picture we give profile picture as cover picture -->
-        {% load thumbnail %}
-           
-        {% thumbnail  user.profile.photo "623x220" as im %}
-        <a href="{{ user.profile.photo.url }}"> <!-- enlarge user profile picture to full size on the screen -->
-        <img src="{{ im.url }}" alt=""> 
+        {% endthumbnail %}
     
-    {% endthumbnail %}
+        {% else %}
+            <!-- if not user upload cover picture we give profile picture as cover picture -->
+            {% load thumbnail %}
+        
+            {% thumbnail  user.profile.photo "623x220" as im %}
+                <a href="{{ user.profile.photo.url }}"> <!--enlarge user profile picture to full size on the screen-->
+                <!-- <img src="{{ im.url }}" alt="">  -->
+                upload
+            
+            {% endthumbnail %}
         {% endif %}
     </div>
-  
-    <!-- user profile picture  -->
+    
+    <!-- user profile photo -->
     <div class="user-profile-picture">
-        <a href="{{ user.profile.photo.url }}"> <!-- enlarge user profile picture to full size on the screen -->
-        <img src="{{ user.profile.photo.url }}" class="img-fluid" alt="" width="60" height="50">
-        </a>
+        {% if user.profile.photo %}
+            <a href="{{ user.profile.photo.url }}"> <!-- enlarge user profile picture to full size on the screen -->
+            <img src="{{ user.profile.photo.url }}" class="img-fluid" alt="" width="60" height="50">
+            </a>
+        {% else %}
+            <img src="{% static 'not-found.png' %}" alt="" width="60" height="50">
+        {% endif %}
     </div>
-               
 {% endblock top-what-is-happening %} 
 
     
@@ -80,9 +81,61 @@
                     </a>
             </div>
             {% else %}
-            <div class="user-profile-follow-button mr-5">
+            <!-- <div class="user-profile-follow-button mr-5">
                 <a href="{% url 'edit'%}" class="edit">Edit Profile</a>
+            </div> -->
+
+         <!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  <div class="user-profile-follow-button mr-5">
+  <a href="" class="" data-toggle="modal" data-target="#exampleModal">Edit Profile</a>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="haye"> 
+      <div class="modal-content">
+        <div class="modal-header" id="modal-header">
+            <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+            <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" style="float: left;">
+              <span class="xidh"  aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    
+         
+        <div class="modal-body">
+            <div class="user-cover-picture">
+                {% if request.user.profile.cover_picture %}
+                    <img src="{{ user.profile.cover_picture.url }}" alt="" width="500" height="150">
+                {% else %}
+                    <img src="{% static 'not-found.png' %}" alt="" width="623" height="150">
+
+                {% endif %}
+                    
+                
             </div>
+            
+            <div class="user-profile-picture">
+                {% if request.user.profile.photo %}
+                    <img src="{{user.profile.photo.url}}" alt="" width="100" height="80"> 
+                {% else %}
+                    <img src="{% static 'not-found.png' %}" alt="" width="623" height="150">
+                {% endif %}
+            </div>
+            
+          <form action="." method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ edit_profile_form|crispy }}
+            <button type="submit" class="btn btn-primar save">save</button> 
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+         <!-- @@@@@@@@@@@@@@@@@@@@@@@@'''' -->
 
             {% endif %}
         </div>
@@ -132,7 +185,11 @@
         <div class="user-wrapper"> 
             <!-- userka postada soo dhigay  -->
           <a href="{% url 'user_profile' post.user.username %}">
-            <img src="{{ post.user.profile.photo.url }}"></a>{{ post.user }}&nbsp;@{{ post.user.username}}   
+              {% if post.user.profile.photo %}
+                <img src="{{ post.user.profile.photo.url }}"></a>{{ post.user }}&nbsp;@{{ post.user.username}} 
+            {% else %}
+                <img src="{% static 'css/no-image.jpg' %}" alt="">
+            {% endif %}
         </div>
         <!-- post middle wrappper--> 
         <div class="post-wrapper col-10 col-md-10 col-sm-10 "> 
@@ -155,7 +212,7 @@
                  <input class="delete" id="{{ post.id }}"  data-url='{% url "deletee" post.id %}' value="Effacer">
 
 
-            </div>
+                </div>
                     
             <!-- Modal -->
         
@@ -296,7 +353,9 @@
        <div class="row you-might-like_user">
        
            <div class="col-lg-2"> 
+               {% if user.profile.photo %}
             <img src="{{ user.profile.photo.url }}" class="float-left" alt="" width="60">
+            {% endif %}
            </div>
            <div class="col-lg-3 "> 
                <b><a href="{% url 'user_profile' user.username %}" style="color: black;">{{ user.username}}</a></b><br>

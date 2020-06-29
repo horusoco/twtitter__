@@ -18,6 +18,7 @@ from post.models import Post
 
 # new user register for function based views 
 def signup(request):
+    profile = None
     if request.method == 'POST':
         signup_form = UserCreationForm(request.POST)
         if signup_form.is_valid():
@@ -25,7 +26,9 @@ def signup(request):
             new_user.set_password(signup_form.cleaned_data['password1'])
 
             new_user.save()
-            return redirect(reverse('user_profile', args=[new_user.username]))
+            if new_user:
+                profile = Profile.objects.create(user=new_user)
+                return redirect(reverse('user_profile', args=[new_user.username]))
            
 
             
@@ -48,7 +51,6 @@ class SignUp(CreateView):
 
 def user_profile(request, username):
     # userka profilekiisa 
-
     user = User.objects.get(username=username)
     # user profile
     # profile = Profile.objects.get(user=user)
@@ -59,18 +61,40 @@ def user_profile(request, username):
     # 6 latest posts images on the user profile on the  right side
     postss = user.user_posts.all().order_by('-created')[:6]  
 
+    # edit user profile
+   
+    if request.method == 'POST':
+        edit_profile_form = ProfileEditForm(instance=request.user.profile,
+                                            data=request.POST,
+                                            files=request.FILES)
+        if edit_profile_form.is_valid():
+            save_it = edit_profile_form.save(commit=False)
+            save_it.user = request.user        
+            save_it.save()
+            save_it.save()
+            return HttpResponseRedirect(reverse('user_profile', args=[request.user.username]))
+    
+        
+    else:
+        edit_profile_form = ProfileEditForm(instance=request.user.profile) #instance=request.user.profile
+
+    
+    
     context = {
         'user':user,
         'users':users,
         'user_posts':user_posts,
         'postss':postss,
-        # 'profile':profile
+        # 'profile':profile,
+        'edit_profile_form':edit_profile_form
         
     }
 
     return render(request, 'user_profile.html', context)
 
 # edit profile 
+# viewgan ma isticmaalayno iminka oo waxaynu isticmaalaynaa user_profile viewga sare
+# sababtuna waa inuu u baahanyahay tempalte inagu waxaynu isticmaalaynaa profile modal editing
 def editProfile(request,user):
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
@@ -86,8 +110,11 @@ def editProfile(request,user):
 
 
 # QAABKAN SARE IYO KAN HOOSE WAA ISKU MID KII AAD ISTICMAASHO, MID WAA ISAGOO 
-# PARAMETER LEH MID WAA WITH OUT PARAMETER 
+# PARAMETER LEH 
+# MID WAA WITH OUT PARAMETER 
 # edit profile 
+# viewgan ma isticmaalayno iminka oo waxaynu isticmaalaynaa user_profile viewga sare
+# sababtuna waa inuu u baahanyahay tempalte inagu waxaynu isticmaalaynaa profile modal editing
 def editprofile(request):
     if request.method == 'POST':
         edit_profile_form = ProfileEditForm(instance=request.user.profile,

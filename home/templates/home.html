@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 <!-- waa top middle home page  -->
 {% block what-is-happening %}
 <div class="col-12 col-md-12">
@@ -25,9 +26,15 @@
 <!-- user profile picture inside tweet search box  -->
 <div class="profile-image">
     {% for user in users %}
+    {% if request.user.profile.photo %}
+        
         <a href="{% url 'user_profile' request.user.username %}"><img src="{{ request.user.profile.photo.url}}" alt=""></a>
+        {% else %}
+        <img src="{% static 'not-found.png' %}" alt="">
+    {% endif %}
     {% endfor %}
 </div>
+
 {% endblock what-is-happening%}
 
 <!-- waa middle home pageka xaga postada la soo dhigo -->
@@ -41,9 +48,15 @@
     
             <!-- user wrappper -->
             <div class="user-wrapper mt- "> 
-                <a href="{% url 'user_profile' post.user.username %}"><img src="{{ post.user.profile.photo.url }}"></a>
-                <a href="{% url 'user_profile' post.user.username %}">{{ post.user }}</a>&nbsp;@{{ post.user.username}}
-              </div>
+                {% if post.user.profile.photo %}
+                    <a href="{% url 'user_profile' post.user.username %}"><img src="{{ post.user.profile.photo.url }}"></a>
+                    <a href="{% url 'user_profile' post.user.username %}">{{ post.user }}</a>&nbsp;@{{ post.user.username}}
+                {% else %}
+                    <a href="{% url 'user_profile' post.user.username %}"><img src="{% static 'css/no-image.jpg' %}"></a>
+                    <a href="{% url 'user_profile' post.user.username %}">{{ post.user }}</a>&nbsp;@{{ post.user.username}}
+                {% endif %}
+            </div>
+            
               <!-- starts  post wrapper -->
               <div class="post-wrapper col-10 col-md-10 col-sm-10 mt-">  
                   <div class="card">
@@ -145,8 +158,12 @@
         
         <div class="col-lg-2"> 
             <a href="{% url 'user_profile' user.username %}">
+            {% if user.profile.photo.%}
             <img src="{{ user.profile.photo.url }}" class="float-left" alt="" width="60">
             </a>
+            {% else %}
+            <img src="{% static 'css/no-image.jpg' %}" alt="" width="70">
+            {% endif %}
         </div>
         <div class="col-lg-3 "> 
             <b><a href="{% url 'user_profile' user.username %}" style="color: black;">{{ user.username}}</a></b><br>

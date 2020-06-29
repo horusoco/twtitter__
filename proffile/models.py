@@ -33,9 +33,11 @@ class Profile(models.Model):
     date_of_birth = models.DateField(blank=True,
                                      null=True)
     photo = models.ImageField(upload_to='profile_photo/%Y/%m/%d',
-                                blank=True)
+                                blank=True,
+                                default='static/css/not-found.png')
     cover_picture = models.ImageField(upload_to='page_photo/%Y/%m/%d',
-                                blank=True)
+                                blank=True,
+                                default='static/not-found.png')
     country = models.CharField(max_length=50, blank=True)
     link = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank=True)
@@ -62,3 +64,4 @@ class Profile(models.Model):
 
 
 
+ 
