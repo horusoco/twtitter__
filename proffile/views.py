@@ -10,6 +10,8 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+
 
 from .forms import ProfileEditForm
 
@@ -48,7 +50,7 @@ class SignUp(CreateView):
         return redirect(reverse('user_profile', args=[new_user.username]))
 
 
-
+@login_required
 def user_profile(request, username):
     # userka profilekiisa 
     user = User.objects.get(username=username)

@@ -65,6 +65,7 @@ def home(request):
     return render(request, 'home.html',context)
 
 # replay tweet
+@login_required
 def give_post_tweet(request, id):
     posts = Post.objects.all()
     post = get_object_or_404(Post, id=id)
